@@ -6,7 +6,16 @@ const userSchema = new Schema({
 Underscoreid:String , 
 
 
-useremail:String 
+useremail:String , 
+
+
+password:String , 
+
+
+username:String , 
+
+
+usercategory:String 
 
 
 

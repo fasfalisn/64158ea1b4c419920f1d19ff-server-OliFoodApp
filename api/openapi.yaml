@@ -158,13 +158,25 @@ components:
   schemas:
     user:
       example:
+        password: password
         _id: _id
+        usercategory: usercategory
         useremail: useremail
+        username: username
       properties:
         _id:
           type: string
         useremail:
           type: string
+        password:
+          type: string
+        username:
+          type: string
+        usercategory:
+          type: string
       required:
+      - password
+      - usercategory
       - useremail
+      - username
       type: object
