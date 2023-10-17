@@ -1,4 +1,5 @@
 
+const { UserUserimageSchema } =require('./UserUserimage');
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
@@ -15,7 +16,35 @@ password:String ,
 username:String , 
 
 
-usercategory:String 
+usercategory:String , 
+
+
+userimage:  
+UserUserimageSchema
+ , 
+
+
+
+
+ userproducts: [ 
+  {
+    type: Schema.Types.ObjectId,
+    ref:'product'
+  }
+
+]
+, 
+
+userstatus:String , 
+
+
+usertown:String , 
+
+
+useraddress:String , 
+
+
+usertax:String 
 
 
 

@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-const { User } = require('../models/User');
+const { Order } = require('../models/Order');
 
 /**
 * Creates the data
 *
-* user User data to be created
-* returns user
+* order Order data to be created
+* returns order
 * */
-const createuser = ({ user }) => new Promise(
+const createorder = ({ order }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await new User(user).save();
+      query = await new Order(order).save();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -25,14 +25,14 @@ const createuser = ({ user }) => new Promise(
 /**
 * Delete the element
 *
-* userId String the Id parameter
+* orderId String the Id parameter
 * no response value expected for this operation
 * */
-const deleteuser = ({ userId }) => new Promise(
+const deleteorder = ({ orderId }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findOneAndDelete({ _id:userId }).exec();
+      query = await Order.findOneAndDelete({ _id:orderId }).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -47,13 +47,16 @@ const deleteuser = ({ userId }) => new Promise(
 *
 * returns Object
 * */
-const getAlluser = () => new Promise(
+const getAllorder = () => new Promise(
   async (resolve, reject) => {
     try {
       let query = {}
-      query = await User.find()
+      query = await Order.find()
       .populate({
-        path: 'userproducts'        })
+        path: 'ordercustomer',
+        populate: {
+          path: 'userproducts'        }
+        })
       .exec();
       // this is a test
       resolve(Service.successResponse(query));
@@ -71,13 +74,16 @@ const getAlluser = () => new Promise(
 * filter String the query based on which the search is performed
 * returns Object
 * */
-const getByParamsuser = ({ filter }) => new Promise(
+const getByParamsorder = ({ filter }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {}
-      query = await User.find(JSON.parse( filter ))
+      query = await Order.find(JSON.parse( filter ))
       .populate({
-        path: 'userproducts'        })
+        path: 'ordercustomer',
+        populate: {
+          path: 'userproducts'        }
+        })
       .exec();
       // this is a test
       resolve(Service.successResponse(query));
@@ -92,17 +98,20 @@ const getByParamsuser = ({ filter }) => new Promise(
 /**
 * Get the element
 *
-* userId String the Id parameter
-* returns user
+* orderId String the Id parameter
+* returns order
 * */
-const getuser = ({ userId }) => new Promise(
+const getorder = ({ orderId }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findById(userId)
+      query = await Order.findById(orderId)
       
       .populate({
-        path: 'userproducts'        })
+        path: 'ordercustomer',
+        populate: {
+          path: 'userproducts'        }
+        })
       .exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
@@ -116,15 +125,15 @@ const getuser = ({ userId }) => new Promise(
 /**
 * Updates the element
 *
-* userId String the Id parameter
-* user User data to be updated (optional)
-* returns user
+* orderId String the Id parameter
+* order Order data to be updated (optional)
+* returns order
 * */
-const updateuser = ({ userId, user }) => new Promise(
+const updateorder = ({ orderId, order }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findOneAndUpdate({ _id:userId },user).exec();
+      query = await Order.findOneAndUpdate({ _id:orderId },order).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -136,10 +145,10 @@ const updateuser = ({ userId, user }) => new Promise(
 );
 
 module.exports = {
-  createuser,
-  deleteuser,
-  getAlluser,
-  getByParamsuser,
-  getuser,
-  updateuser,
+  createorder,
+  deleteorder,
+  getAllorder,
+  getByParamsorder,
+  getorder,
+  updateorder,
 };

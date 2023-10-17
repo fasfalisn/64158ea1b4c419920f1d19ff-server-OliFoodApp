@@ -1,18 +1,18 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
-const { User } = require('../models/User');
+const { Product } = require('../models/Product');
 
 /**
 * Creates the data
 *
-* user User data to be created
-* returns user
+* product Product data to be created
+* returns product
 * */
-const createuser = ({ user }) => new Promise(
+const createproduct = ({ product }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await new User(user).save();
+      query = await new Product(product).save();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -25,14 +25,14 @@ const createuser = ({ user }) => new Promise(
 /**
 * Delete the element
 *
-* userId String the Id parameter
+* productId String the Id parameter
 * no response value expected for this operation
 * */
-const deleteuser = ({ userId }) => new Promise(
+const deleteproduct = ({ productId }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findOneAndDelete({ _id:userId }).exec();
+      query = await Product.findOneAndDelete({ _id:productId }).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -47,14 +47,11 @@ const deleteuser = ({ userId }) => new Promise(
 *
 * returns Object
 * */
-const getAlluser = () => new Promise(
+const getAllproduct = () => new Promise(
   async (resolve, reject) => {
     try {
       let query = {}
-      query = await User.find()
-      .populate({
-        path: 'userproducts'        })
-      .exec();
+      query = await Product.find().exec();
       // this is a test
       resolve(Service.successResponse(query));
     } catch (e) {
@@ -71,14 +68,11 @@ const getAlluser = () => new Promise(
 * filter String the query based on which the search is performed
 * returns Object
 * */
-const getByParamsuser = ({ filter }) => new Promise(
+const getByParamsproduct = ({ filter }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {}
-      query = await User.find(JSON.parse( filter ))
-      .populate({
-        path: 'userproducts'        })
-      .exec();
+      query = await Product.find(JSON.parse( filter )).exec();
       // this is a test
       resolve(Service.successResponse(query));
     } catch (e) {
@@ -92,17 +86,14 @@ const getByParamsuser = ({ filter }) => new Promise(
 /**
 * Get the element
 *
-* userId String the Id parameter
-* returns user
+* productId String the Id parameter
+* returns product
 * */
-const getuser = ({ userId }) => new Promise(
+const getproduct = ({ productId }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findById(userId)
-      
-      .populate({
-        path: 'userproducts'        })
+      query = await Product.findById(productId)
       .exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
@@ -116,15 +107,15 @@ const getuser = ({ userId }) => new Promise(
 /**
 * Updates the element
 *
-* userId String the Id parameter
-* user User data to be updated (optional)
-* returns user
+* productId String the Id parameter
+* product Product data to be updated (optional)
+* returns product
 * */
-const updateuser = ({ userId, user }) => new Promise(
+const updateproduct = ({ productId, product }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findOneAndUpdate({ _id:userId },user).exec();
+      query = await Product.findOneAndUpdate({ _id:productId },product).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -136,10 +127,10 @@ const updateuser = ({ userId, user }) => new Promise(
 );
 
 module.exports = {
-  createuser,
-  deleteuser,
-  getAlluser,
-  getByParamsuser,
-  getuser,
-  updateuser,
+  createproduct,
+  deleteproduct,
+  getAllproduct,
+  getByParamsproduct,
+  getproduct,
+  updateproduct,
 };
