@@ -5,6 +5,9 @@ const Schema = mongoose.Schema;
 const orderSchema = new Schema({
 Underscoreid:String , 
 
+orderstatus:String , 
+
+
 
 ordercustomer:  
   {
@@ -19,9 +22,20 @@ ordersupplier:
   {
     type: Schema.Types.ObjectId,
     ref:'user'
-  }
+  },
 
  
+  orderproducts: [
+    {
+    orderproduct: {
+      type: Schema.Types.ObjectId,
+      ref: 'product'
+    },
+    orderproductquantity: {
+      type: Number
+    }
+  }
+  ]
 
 
 

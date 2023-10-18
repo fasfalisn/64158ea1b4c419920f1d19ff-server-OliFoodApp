@@ -485,33 +485,33 @@ components:
       type: object
     product:
       example:
-        productcategory: productcategory
-        productunit: productunit
-        productname: productname
+        productCategory: productCategory
+        productUnit: productUnit
+        productName: productName
         _id: _id
-        productdesc: productdesc
-        productimage:
+        productDesc: productDesc
+        productImage:
           data: data
           name: name
       properties:
         _id:
           type: string
-        productname:
+        productName:
           type: string
-        productdesc:
+        productDesc:
           type: string
-        productimage:
+        productImage:
           $ref: '#/components/schemas/user_userimage'
-        productcategory:
+        productCategory:
           type: string
-        productunit:
+        productUnit:
           type: string
       required:
-      - productcategory
-      - productdesc
-      - productimage
-      - productname
-      - productunit
+      - productCategory
+      - productDesc
+      - productImage
+      - productName
+      - productUnit
       type: object
     order:
       example:

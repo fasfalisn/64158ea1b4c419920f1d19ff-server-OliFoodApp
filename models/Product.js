@@ -7,21 +7,21 @@ const productSchema = new Schema({
 Underscoreid:String , 
 
 
-productname:String , 
+productName:String , 
 
 
-productdesc:String , 
+productDesc:String , 
 
 
-productimage:  
+productImage:  
 UserUserimageSchema
  , 
 
 
-productcategory:String , 
+productCategory:String , 
 
 
-productunit:String 
+productUnit:String 
 
 
 

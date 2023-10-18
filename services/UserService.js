@@ -124,7 +124,7 @@ const updateuser = ({ userId, user }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await User.findOneAndUpdate({ _id:userId },user).exec();
+      query = await User.findOneAndUpdate({ _id:userId },user,{new: true}).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
