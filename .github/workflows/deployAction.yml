@@ -26,9 +26,6 @@ jobs:
   Deploy-the-code:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Create env file'
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.WABLI_SERVER_SSH_HOST }}
@@ -39,3 +36,6 @@ jobs:
             ./wabli-applications/deploy.sh -b main -d okthess-community-6001 -r
             https://github.com/fasfalisn/64158ea1b4c419920f1d19ff-server-OliFoodApp.git
             -f 64158ea1b4c419920f1d19ff-server-OliFoodApp -p 6003
+
+            echo "${{ secrets.ENV_FILE }}" > ./wabli-applications/okthess-community-6001/64158ea1b4c419920f1d19ff-server-OliFoodApp/.env
+
