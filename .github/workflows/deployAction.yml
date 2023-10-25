@@ -7,6 +7,9 @@ jobs:
   Deploy-the-code:
     runs-on: ubuntu-latest
     steps:
+      - name: 'Create env file'
+        run: |
+          echo "${{ secrets.ENV_FILE }}" > .env
       - uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.WABLI_SERVER_SSH_HOST }}
