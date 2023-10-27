@@ -1,6 +1,48 @@
 /* eslint-disable no-unused-vars */
 const Service = require('./Service');
 const { Order } = require('../models/Order');
+const { User } = require('../models/User');
+const nodeMailer = require('nodemailer');
+const dotenv = require('dotenv')
+dotenv.config();
+
+async function sendEmail (useremail) {
+  const transporter = nodeMailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.USER_EMAIL,
+        pass: process.env.USER_PASS,
+        clientId: process.env.CLIENT_ID,
+        clientSecret: process.env.CLIENT_SECRET,
+        refreshToken: process.env.REFRESH_TOKEN
+      }
+  });
+
+  const mailOptions = {
+      from: '"Olifood Team" <olifoodapp>', // sender address
+      to: useremail, // list of receivers
+      subject:
+          "Olifood - Νέα Παραγγελία", // Subject line
+      html: `<head>
+      <meta charset="UTF-8">
+      <title>Olifood</title>
+    </head>
+    <body>
+        <div style="font-family: verdana; max-width:800px;">
+        <h1>Νέα Παραγγελία</h1>
+        <p>Παρακαλούμε συνδεθείτε για λεπτομέρειες.</p>
+        </div>
+      </body>`,
+  };
+
+  transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+          console.log(error);
+      } else {
+          console.log("Email sent: " + info.response);
+      }
+  });
+};
 
 /**
 * Creates the data
@@ -13,6 +55,8 @@ const createorder = ({ order }) => new Promise(
     try {
       let query = {};
       query = await new Order(order).save();
+      let user = await User.findById(order.ordersupplier).exec();
+      await sendEmail(user.useremail);
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(

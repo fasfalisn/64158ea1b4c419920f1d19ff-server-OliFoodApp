@@ -7,6 +7,8 @@ Underscoreid:String ,
 
 orderstatus:String , 
 
+ordercomment: String,
+
 
 
 ordercustomer:  
