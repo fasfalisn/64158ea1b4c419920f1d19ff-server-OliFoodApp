@@ -79,7 +79,6 @@ class ExpressServer {
     });
 
     this.app.post('/v1/login', async (req, res) => {
-      console.log(req.body)
       const { useremail, password } = req.body;
       
     

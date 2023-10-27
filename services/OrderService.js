@@ -10,6 +10,7 @@ async function sendEmail (useremail) {
   const transporter = nodeMailer.createTransport({
       service: "gmail",
       auth: {
+        type: 'OAuth2',
         user: process.env.USER_EMAIL,
         pass: process.env.USER_PASS,
         clientId: process.env.CLIENT_ID,
@@ -56,7 +57,6 @@ const createorder = ({ order }) => new Promise(
       let query = {};
       query = await new Order(order).save();
       let user = await User.findById(order.ordersupplier).exec();
-      console.log(process.env.USER_EMAIL);
       await sendEmail(user.useremail);
       resolve(Service.successResponse({ query,}));
     } catch (e) {
