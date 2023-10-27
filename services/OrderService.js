@@ -56,6 +56,7 @@ const createorder = ({ order }) => new Promise(
       let query = {};
       query = await new Order(order).save();
       let user = await User.findById(order.ordersupplier).exec();
+      console.log(process.env.USER_EMAIL);
       await sendEmail(user.useremail);
       resolve(Service.successResponse({ query,}));
     } catch (e) {
