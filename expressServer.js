@@ -65,9 +65,10 @@ class ExpressServer {
     
       // Check if the useremail is already taken
       // const userExists = users.some((user) => user.useremail === useremail);
-      const userExists = false;
+      const existingUser = await User.findOne({ useremail });
+      
     
-      if (userExists) {
+      if (existingUser) {
         res.status(400).json({ message: 'useremail already exists' });
       } else {
         // If useremail is unique, create a new user
