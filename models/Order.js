@@ -9,6 +9,8 @@ orderstatus:String ,
 
 ordercomment: String,
 
+ordernote: String,
+
 
 
 ordercustomer:  
