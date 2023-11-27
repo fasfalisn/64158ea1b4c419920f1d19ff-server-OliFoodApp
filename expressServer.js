@@ -100,7 +100,7 @@ class ExpressServer {
           }
 
           const token = jwt.sign({ userid: user._id.toString() }, 'secretKey', {
-            expiresIn: "24h",
+            expiresIn: "365d",
           });
           // If user exists, return the user data
           res.json( {user, token});

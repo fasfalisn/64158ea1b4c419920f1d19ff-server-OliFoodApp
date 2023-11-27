@@ -8,28 +8,29 @@
 
 const Controller = require('./Controller');
 const service = require('../services/UserService');
+const userPolicy = require('../userPolicy');
 const createuser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.createuser);
+  await userPolicy.userPolicy(request, response, service.createuser);
 };
 
 const deleteuser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.deleteuser);
+  await userPolicy.userPolicy(request, response, service.deleteuser);
 };
 
 const getAlluser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getAlluser);
+  await userPolicy.userPolicy(request, response, service.getAlluser);
 };
 
 const getByParamsuser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getByParamsuser);
+  await userPolicy.userPolicy(request, response, service.getByParamsuser);
 };
 
 const getuser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getuser);
+  await userPolicy.userPolicy(request, response, service.getuser);
 };
 
 const updateuser = async (request, response) => {
-  await Controller.handleRequest(request, response, service.updateuser);
+  await userPolicy.userPolicy(request, response, service.updateuser);
 };
 
 

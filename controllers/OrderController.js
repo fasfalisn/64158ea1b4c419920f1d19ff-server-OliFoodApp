@@ -8,28 +8,29 @@
 
 const Controller = require('./Controller');
 const service = require('../services/OrderService');
+const userPolicy = require('../userPolicy');
 const createorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.createorder);
+  await userPolicy.userPolicy(request, response, service.createorder);
 };
 
 const deleteorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.deleteorder);
+  await userPolicy.userPolicy(request, response, service.deleteorder);
 };
 
 const getAllorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getAllorder);
+  await userPolicy.userPolicy(request, response, service.getAllorder);
 };
 
 const getByParamsorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getByParamsorder);
+  await userPolicy.userPolicy(request, response, service.getByParamsorder);
 };
 
 const getorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getorder);
+  await userPolicy.userPolicy(request, response, service.getorder);
 };
 
 const updateorder = async (request, response) => {
-  await Controller.handleRequest(request, response, service.updateorder);
+  await userPolicy.userPolicy(request, response, service.updateorder);
 };
 
 

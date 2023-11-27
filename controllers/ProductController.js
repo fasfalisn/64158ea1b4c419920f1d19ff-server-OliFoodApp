@@ -8,28 +8,29 @@
 
 const Controller = require('./Controller');
 const service = require('../services/ProductService');
+const userPolicy = require('../userPolicy');
 const createproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.createproduct);
+  await userPolicy.userPolicy(request, response, service.createproduct);
 };
 
 const deleteproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.deleteproduct);
+  await userPolicy.userPolicy(request, response, service.deleteproduct);
 };
 
 const getAllproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getAllproduct);
+  await userPolicy.userPolicy(request, response, service.getAllproduct);
 };
 
 const getByParamsproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getByParamsproduct);
+  await userPolicy.userPolicy(request, response, service.getByParamsproduct);
 };
 
 const getproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.getproduct);
+  await userPolicy.userPolicy(request, response, service.getproduct);
 };
 
 const updateproduct = async (request, response) => {
-  await Controller.handleRequest(request, response, service.updateproduct);
+  await userPolicy.userPolicy(request, response, service.updateproduct);
 };
 
 
