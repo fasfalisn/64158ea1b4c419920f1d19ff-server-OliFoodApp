@@ -21,7 +21,14 @@ UserUserimageSchema
 productCategory:String , 
 
 
-productUnit:String 
+productUnit:String ,
+
+usersSavedIt: [
+  {
+    type: Schema.Types.ObjectId,
+    ref: 'user'
+  }
+]
 
 
 
