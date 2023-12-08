@@ -3,7 +3,8 @@ const Service = require('./Service');
 const { Order } = require('../models/Order');
 const { User } = require('../models/User');
 const nodeMailer = require('nodemailer');
-const dotenv = require('dotenv')
+const dotenv = require('dotenv');
+const webpush = require('web-push');
 dotenv.config();
 
 async function sendEmail (useremail) {
@@ -44,6 +45,17 @@ async function sendEmail (useremail) {
   });
 };
 
+const apiKeys = {
+  publicKey: "BJhKT7T_z0WIZOZ7tjgZjJZJBGG3NA3qc6c90H9U2qYX-g01wreP9eCvfCA7ULpj5OtfOJ6fK_wZfRkan9EMYbk",
+  privateKey: "tNFeTKChIdDXUTatWIIqzxzgZ3-lpyOM7UAToUbpgPU"
+}
+
+webpush.setVapidDetails(
+  'mailto:YOUR_MAILTO_STRING',
+  apiKeys.publicKey,
+  apiKeys.privateKey
+);
+
 /**
 * Creates the data
 *
@@ -57,6 +69,20 @@ const createorder = ({ order }) => new Promise(
       query = await new Order(order).save();
       let user = await User.findById(order.ordersupplier).exec();
       await sendEmail(user.useremail);
+      if(user.usersubscriptions !== undefined && user.usersubscriptions.length !== 0){
+        user.usersubscriptions.forEach((sub) => {
+            webpush.sendNotification(sub, "You have a new Order").catch(async (e)=> {
+              if(e.body.includes('expired')){
+                console.log('expired');
+                user.usersubscriptions = user.usersubscriptions.filter(existingSub => existingSub !== sub);
+                await User.findByIdAndUpdate(user._id, user).exec();
+              }
+              else{
+                console.log(e.body);
+              }
+            })
+        })
+      }
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(

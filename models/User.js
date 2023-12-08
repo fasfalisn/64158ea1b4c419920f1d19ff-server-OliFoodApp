@@ -37,6 +37,7 @@ UserUserimageSchema
 
 userstatus:String , 
 
+usersubscriptions: [Object],
 
 usertown:String , 
 
