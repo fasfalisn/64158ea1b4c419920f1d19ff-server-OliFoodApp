@@ -35,6 +35,15 @@ UserUserimageSchema
 ]
 , 
 
+usersuppliers: [ 
+  {
+    type: Schema.Types.ObjectId,
+    ref:'user'
+  }
+
+]
+,
+
 userstatus:String , 
 
 usersubscriptions: [Object],

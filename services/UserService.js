@@ -103,6 +103,8 @@ const getuser = ({ userId }) => new Promise(
       
       .populate({
         path: 'userproducts'        })
+        .populate({
+          path: 'usersuppliers'        })
       .exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
