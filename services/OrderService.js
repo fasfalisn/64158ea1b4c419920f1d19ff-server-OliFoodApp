@@ -157,6 +157,7 @@ const getByParamsorder = ({ filter }) => new Promise(
         populate: {
           path: 'userproducts'        }
         })
+      .sort({ createdAt: -1 }) 
       .exec();
       // this is a test
       resolve(Service.successResponse(query));
