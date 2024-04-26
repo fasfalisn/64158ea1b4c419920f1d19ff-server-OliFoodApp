@@ -15,13 +15,13 @@ async function userPolicy(request, response, userAction) {
     const bearer = 'Bearer ';
 
     if (!authHeader || !authHeader.startsWith(bearer)) {
-        Controller.sendResponse(response,Service.rejectResponse(
-            e.message || 'Invalid input',
-            e.status || 405,
+        return Controller.sendResponse(response,Service.rejectResponse(
+            'Invalid input',
+            405
           ));
     }
 
-    const token = authHeader.replace(bearer, '');
+    const token = authHeader?.replace(bearer, '');
     const secretKey = "secretKey";
 
     // Verify Token
@@ -30,7 +30,7 @@ async function userPolicy(request, response, userAction) {
         const user = await service.getuser({userId: decoded.userid });
 
         if (!user) {
-            Controller.sendResponse(response,Service.rejectResponse(
+            return Controller.sendResponse(response,Service.rejectResponse(
                 e.message || 'Invalid input',
                 e.status || 405,
               ));
@@ -41,7 +41,7 @@ async function userPolicy(request, response, userAction) {
 
     }
     catch (e){
-        Controller.sendResponse(response,Service.rejectResponse(
+        return Controller.sendResponse(response,Service.rejectResponse(
             e.message || 'Invalid input',
             e.status || 405,
           ));

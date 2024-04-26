@@ -213,7 +213,19 @@ const updateorder = ({ orderId, order }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
-      query = await Order.findOneAndUpdate({ _id:orderId },order, {new: true}).exec();
+      query = await Order.findOneAndUpdate({ _id:orderId },order, {new: true})
+      .populate({
+        path: 'ordersupplier'
+        })
+        .populate({
+          path: 'ordercustomer'
+        })
+        .populate({
+          path: 'orderproducts',
+          populate: {
+            path: 'orderproduct'
+          }
+        }).exec();
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
