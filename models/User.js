@@ -36,6 +36,15 @@ UserUserimageSchema
 ]
 , 
 
+usersavedproducts: [ 
+  {
+    type: Schema.Types.ObjectId,
+    ref:'product'
+  }
+
+]
+,
+
 usersuppliers: [ 
   {
     type: Schema.Types.ObjectId,
