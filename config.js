@@ -1,10 +1,12 @@
 const path = require('path');
+const dotenv = require("dotenv");
+dotenv.config();
 
 const config = {
   ROOT_DIR: __dirname,
   URL_PORT: 6003,
   URL_PATH: 'http://localhost',
-  DB_URL: 'mongodb://127.0.0.1:27017/okthesscommunity-6001',
+  DB_URL: process.env.DB_URL,
   DEBUG_MODE: true,
   BASE_VERSION: '/v1',
   CONTROLLER_DIRECTORY: path.join(__dirname, 'controllers'),
