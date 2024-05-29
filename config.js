@@ -4,7 +4,7 @@ dotenv.config();
 
 const config = {
   ROOT_DIR: __dirname,
-  URL_PORT: 6003,
+  URL_PORT: process.env.URL_PORT,
   URL_PATH: 'http://localhost',
   DB_URL: process.env.DB_URL,
   DEBUG_MODE: true,
