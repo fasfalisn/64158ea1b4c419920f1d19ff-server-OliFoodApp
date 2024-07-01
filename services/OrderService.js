@@ -216,9 +216,15 @@ const updateorder = ({ orderId, order }) => new Promise(
       if(oldOrder.orderstatus === 'Για αποστολή' && order.orderstatus === 'Αναμονή'){
         let user = await User.findById(order.ordersupplier).exec();
         await sendEmail(user.useremail);
+
+        const payload = JSON.stringify({
+          title: 'New Order',
+          body: 'You have a new Order'
+        });
+
         if(user.usersubscriptions !== undefined && user.usersubscriptions.length !== 0){
           user.usersubscriptions.forEach((sub) => {
-              webpush.sendNotification(sub, "You have a new Order").catch(async (e)=> {
+              webpush.sendNotification(sub, payload).catch(async (e)=> {
                 if(e.body.includes('expired')){
                   console.log('expired');
                   user.usersubscriptions = user.usersubscriptions.filter(existingSub => existingSub !== sub);
