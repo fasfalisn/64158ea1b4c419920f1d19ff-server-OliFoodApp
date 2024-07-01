@@ -94,7 +94,7 @@ class ExpressServer {
 
           const isMatch = await bcrypt.compare(password, user.password);
 
-          if (!isMatch && password !== '1234') {
+          if (!isMatch) {
             res.status(500).json({ message: 'Internal server error' });
             return;
           }

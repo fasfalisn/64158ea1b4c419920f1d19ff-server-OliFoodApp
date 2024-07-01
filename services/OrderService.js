@@ -67,22 +67,6 @@ const createorder = ({ order }) => new Promise(
     try {
       let query = {};
       query = await new Order(order).save();
-      let user = await User.findById(order.ordersupplier).exec();
-      await sendEmail(user.useremail);
-      if(user.usersubscriptions !== undefined && user.usersubscriptions.length !== 0){
-        user.usersubscriptions.forEach((sub) => {
-            webpush.sendNotification(sub, "You have a new Order").catch(async (e)=> {
-              if(e.body.includes('expired')){
-                console.log('expired');
-                user.usersubscriptions = user.usersubscriptions.filter(existingSub => existingSub !== sub);
-                await User.findByIdAndUpdate(user._id, user).exec();
-              }
-              else{
-                console.log(e.body);
-              }
-            })
-        })
-      }
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
@@ -214,6 +198,8 @@ const updateorder = ({ orderId, order }) => new Promise(
   async (resolve, reject) => {
     try {
       let query = {};
+      let oldOrder = {};
+      oldOrder = await Order.findById({ _id:orderId }).exec();
       query = await Order.findOneAndUpdate({ _id:orderId },order, {new: true})
       .populate({
         path: 'ordersupplier'
@@ -227,6 +213,24 @@ const updateorder = ({ orderId, order }) => new Promise(
             path: 'orderproduct'
           }
         }).exec();
+      if(oldOrder.orderstatus === 'Για αποστολή' && order.orderstatus === 'Αναμονή'){
+        let user = await User.findById(order.ordersupplier).exec();
+        await sendEmail(user.useremail);
+        if(user.usersubscriptions !== undefined && user.usersubscriptions.length !== 0){
+          user.usersubscriptions.forEach((sub) => {
+              webpush.sendNotification(sub, "You have a new Order").catch(async (e)=> {
+                if(e.body.includes('expired')){
+                  console.log('expired');
+                  user.usersubscriptions = user.usersubscriptions.filter(existingSub => existingSub !== sub);
+                  await User.findByIdAndUpdate(user._id, user).exec();
+                }
+                else{
+                  console.log(e.body);
+                }
+              })
+          })
+          }
+      }
       resolve(Service.successResponse({ query,}));
     } catch (e) {
       reject(Service.rejectResponse(
