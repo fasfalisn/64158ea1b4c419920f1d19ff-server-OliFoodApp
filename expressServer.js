@@ -15,10 +15,16 @@ const { createuser } = require('./services/UserService');
 const { User } = require('./models/User');
 const bcrypt = require("bcryptjs");
 const jwt = require('jsonwebtoken');
+const axios = require('axios');
+const dotenv = require("dotenv");
+
 
 class ExpressServer {
   constructor(port, openApiYaml) {
+    dotenv.config();
     this.port = port;
+    this.intervalId = null;
+    this.serviceUrl = process.env.SERVICE_URL
     this.app = express();
     this.openApiPath = openApiYaml;
     try {
@@ -136,14 +142,32 @@ class ExpressServer {
 
         http.createServer(this.app).listen(this.port);
         console.log(`Listening on port ${this.port}`);
+        this.callService();
+        this.intervalId = setInterval(async () => {
+          await this.callService();
+        }, 10 * 60 * 1000);
       });
   }
+
+  async callService() {
+    try {
+      const response = await axios.get(this.serviceUrl);
+      console.log('Service called successfully:', response.data);
+    } catch (error) {
+      console.error('Error calling service:', error.message);
+    }
+  }
+  
 
 
   async close() {
     if (this.server !== undefined) {
       await this.server.close();
       console.log(`Server on port ${this.port} shut down`);
+    }
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+      console.log('Service interval cleared.');
     }
   }
 }
