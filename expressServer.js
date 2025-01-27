@@ -216,10 +216,10 @@ class ExpressServer {
 
         http.createServer(this.app).listen(this.port);
         console.log(`Listening on port ${this.port}`);
-        this.callService();
-        this.intervalId = setInterval(async () => {
-          await this.callService();
-        }, 10 * 60 * 1000);
+        // this.callService();
+        // this.intervalId = setInterval(async () => {
+        //   await this.callService();
+        // }, 10 * 60 * 1000);
       });
   }
 
